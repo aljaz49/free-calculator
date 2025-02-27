@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Service - Calculator and Currency Converter</title>
+  <style>
+    /* General styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    main {
+      display: flex;
+      margin: 20px;
+    }
+
+    aside {
+      width: 20%;
+      background-color: #f8f8f8;
+      padding: 10px;
+      margin-right: 20px;
+      border-right: 2px solid #ddd;
+    }
+
+    section {
+      flex: 1;
+    }
+
+    .tool {
+      background-color: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #4CAF50;
+    }
+
+    /* Calculator style (dark gray) */
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 300px;
+      margin: 0 auto;
+      background-color: #333; /* Dark gray background */
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .calculator input {
+      grid-column: span 4;
+      padding: 15px;
+      font-size: 24px;
+      text-align: right;
+      border: 1px solid #555; /* Darker border */
+      border-radius: 8px;
+      background-color: #444; /* Dark gray background */
+      color: white; /* White text */
+      margin-bottom: 10px;
+    }
+
+    .calculator button {
+      padding: 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #555; /* Gray buttons */
+      color: white; /* White text */
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .calculator button:hover {
+      background-color: #777; /* Lighter gray on hover */
+    }
+
+    .calculator button.operator {
+      background-color: #4CAF50; /* Green for operations */
+      color: white;
+    }
+
+    .calculator button.operator:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+
+    .calculator button.clear {
+      background-color: #ff4444; /* Red for clear */
+      color: white;
+    }
+
+    .calculator button.clear:hover {
+      background-color: #cc0000; /* Darker red on hover */
+    }
+
+    /* Currency converter style (dark gray) */
+    .currency-converter {
+      background-color: #333; /* Dark gray background */
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .currency-converter input,
+    .currency-converter select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #555; /* Darker border */
+      border-radius: 8px;
+      background-color: #444; /* Dark gray background */
+      color: white; /* White text */
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .currency-converter button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50; /* Green button */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .currency-converter button:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+
+    /* Conversion output style (dark gray) */
+    .conversion-output {
+      background-color: #444; /* Dark gray background */
+      padding: 10px;
+      border: 1px solid #555; /* Darker border */
+      border-radius: 8px;
+      color: white; /* White text */
+      font-size: 16px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* Ad space style */
+    .ad-space {
+      background-color: #f8f8f8;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Welcome to the Web Service</h1>
+    <p>We offer calculations and currency conversions. Everything in one place!</p>
+  </header>
+
+  <!-- Main content -->
+  <main>
+    <!-- Ad space (left column) -->
+    <aside>
+      <!-- Google AdSense script -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3206605886014274"
+        crossorigin="anonymous"></script>
+    </aside>
+
+    <!-- Services -->
+    <section>
+      <!-- Calculator -->
+      <div class="tool">
+        <h2>Calculator</h2>
+        <div class="calculator">
+          <input type="text" id="calcInput" readonly>
+          <button class="clear" onclick="clearCalc()">C</button>
+          <button class="operator" onclick="appendOperator('/')">/</button>
+          <button class="operator" onclick="appendOperator('*')">*</button>
+          <button onclick="appendNumber('7')">7</button>
+          <button onclick="appendNumber('8')">8</button>
+          <button onclick="appendNumber('9')">9</button>
+          <button class="operator" onclick="appendOperator('-')">-</button>
+          <button onclick="appendNumber('4')">4</button>
+          <button onclick="appendNumber('5')">5</button>
+          <button onclick="appendNumber('6')">6</button>
+          <button class="operator" onclick="appendOperator('+')">+</button>
+          <button onclick="appendNumber('1')">1</button>
+          <button onclick="appendNumber('2')">2</button>
+          <button onclick="appendNumber('3')">3</button>
+          <button class="operator" onclick="calculateResult()">=</button>
+          <button onclick="appendNumber('0')" style="grid-column: span 2;">0</button>
+          <button onclick="appendNumber('.')">.</button>
+        </div>
+      </div>
+
+      <!-- Currency converter -->
+      <div class="tool">
+        <h2>Currency Converter</h2>
+        <div class="currency-converter">
+          <input type="number" id="amount" placeholder="Enter amount">
+          <select id="currencyFrom">
+            <option value="EUR">Euro (EUR)</option>
+            <option value="USD">US Dollar (USD)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="JPY">Japanese Yen (JPY)</option>
+            <option value="CHF">Swiss Franc (CHF)</option>
+          </select>
+          <select id="currencyTo">
+            <option value="USD">US Dollar (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="JPY">Japanese Yen (JPY)</option>
+            <option value="CHF">Swiss Franc (CHF)</option>
+          </select>
+          <button onclick="convertCurrency()">Convert</button>
+          <div class="conversion-output" id="convertedAmount">Converted: </div>
+        </div>
+      </div>
+
+      <!-- Additional ad space -->
+      <div class="ad-space">
+        <!-- Google AdSense script -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3206605886014274"
+          crossorigin="anonymous"></script>
+      </div>
+    </section>
+  </main>
+
+  <!-- JavaScript -->
+  <script>
+    // Calculator
+    let currentInput = "";
+
+    function appendNumber(number) {
+      currentInput += number;
+      document.getElementById("calcInput").value = currentInput;
+    }
+
+    function appendOperator(operator) {
+      currentInput += operator;
+      document.getElementById("calcInput").value = currentInput;
+    }
+
+    function clearCalc() {
+      currentInput = "";
+      document.getElementById("calcInput").value = "";
+    }
+
+    function calculateResult() {
+      try {
+        const result = eval(currentInput);
+        document.getElementById("calcInput").value = result;
+        currentInput = result.toString();
+      } catch (error) {
+        document.getElementById("calcInput").value = "Error";
+      }
+    }
+
+    // Currency converter
+    function convertCurrency() {
+      const amount = parseFloat(document.getElementById("amount").value);
+      const currencyFrom = document.getElementById("currencyFrom").value;
+      const currencyTo = document.getElementById("currencyTo").value;
+
+      // Exchange rates (for demonstration)
+      const exchangeRates = {
+        EUR: { USD: 1.18, GBP: 0.86, JPY: 130.5, CHF: 1.08 },
+        USD: { EUR: 0.85, GBP: 0.73, JPY: 110.2, CHF: 0.92 },
+        GBP: { EUR: 1.16, USD: 1.37, JPY: 151.3, CHF: 1.26 },
+        JPY: { EUR: 0.0077, USD: 0.0091, GBP: 0.0066, CHF: 0.0083 },
+        CHF: { EUR: 0.93, USD: 1.09, GBP: 0.79, JPY: 120.5 },
+      };
+
+      if (exchangeRates[currencyFrom] && exchangeRates[currencyFrom][currencyTo]) {
+        const convertedAmount = amount * exchangeRates[currencyFrom][currencyTo];
+        document.getElementById("convertedAmount").innerText = `Converted: ${convertedAmount.toFixed(2)} ${currencyTo}`;
+      } else {
+        document.getElementById("convertedAmount").innerText = "Conversion not possible.";
+      }
+    }
+  </script>
+</body>
+</html>
